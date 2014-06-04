@@ -1,0 +1,43 @@
+<manifest xmlns:android="http://schemas.android.com/apk/res/android"
+    package="com.ohnemax.android.glass.doseview"
+    android:versionCode="1"
+    android:versionName="1.0" >
+
+    <uses-sdk
+        android:minSdkVersion="19"
+        android:targetSdkVersion="19" />
+
+    <!-- For free-style voice trigger. -->
+    <uses-permission android:name="com.google.android.glass.permission.DEVELOPMENT"/>
+    
+    
+    <uses-permission android:name="android.permission.INTERNET"/>
+    
+    
+    <application>
+        
+        <activity android:name=".StartActivity"
+            android:icon="@drawable/rad_bw"
+            android:label="@string/app_name"
+            android:exported="true" >
+            <intent-filter>
+                <action android:name="com.google.android.glass.action.VOICE_TRIGGER" />
+            </intent-filter>
+            <meta-data android:name="com.google.android.glass.VoiceTrigger"
+                android:resource="@xml/voice_trigger"
+                />
+        </activity>
+        
+                <activity
+            android:name=".MenuActivity"
+            android:exported="true"
+            />
+        
+        <service
+            android:name=".DoseRateService"
+            android:exported="true"
+            />
+        
+    </application>
+
+</manifest>

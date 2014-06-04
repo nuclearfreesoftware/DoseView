@@ -1,0 +1,7 @@
+<resources>
+
+    <string name="app_name">DoseView</string>
+    <string name="voice_trigger">show radiation levels</string>
+    
+    <string name="stop">Stop</string>
+</resources>
