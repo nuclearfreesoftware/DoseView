@@ -3,22 +3,58 @@
     xmlns:tools="http://schemas.android.com/tools"
     android:layout_width="match_parent"
     android:layout_height="match_parent"
+    android:keepScreenOn="true"
     >
 
     <RelativeLayout
         android:id="@+id/left_column"
         android:layout_width="@dimen/glass_card_left_column_width"
         android:layout_height="match_parent"
+        android:layout_marginLeft="15px"
+        android:layout_marginRight="15px"
+        android:layout_marginTop="15px"
+        android:layout_marginBottom="15px"
         >
 	
         <TextView
-        android:id="@+id/text_left_column"
+        android:id="@+id/device_lat_info"
         android:layout_width="match_parent"
-        android:layout_height="match_parent"
-        android:layout_gravity="center"
-        android:layout_marginTop="-10px"
-        android:textSize="160px"
-        android:gravity="center" />
+        android:layout_height="wrap_content"
+        android:textSize="15px"
+        android:gravity="left" />
+                
+        <TextView
+        android:id="@+id/device_lat"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/device_lat_info"
+        android:textSize="30px"
+        android:gravity="left" />
+        
+        <TextView
+        android:id="@+id/device_long_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/device_lat"
+        android:textSize="15px"
+        android:gravity="left" />
+                
+        <TextView
+        android:id="@+id/device_long"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/device_long_info"
+        android:textSize="30px"
+        android:gravity="left" />
+        
+        <TextView
+        android:id="@+id/data_user"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/device_long"
+        android:textSize="30px"
+        android:gravity="left" />
+        
         	
         <!-- Put widgets for the left column inside this RelativeLayout. -->
 
@@ -38,10 +74,18 @@
         >
 
         <TextView
-        android:id="@+id/dose_rate"
+        android:id="@+id/cpm"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
         android:textSize="70px"
+        android:gravity="center" />
+        
+        <TextView
+        android:id="@+id/dose_rate"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/cpm"
+        android:textSize="50px"
         android:gravity="center" />
         
         <TextView
@@ -59,14 +103,22 @@
         android:layout_below="@+id/status_text_info"
         android:textSize="40px"
         android:gravity="left" />
-        
+
+        <TextView
+        android:id="@+id/distance_text_info"
+        android:layout_width="match_parent"
+        android:layout_height="wrap_content"
+        android:layout_below="@+id/data_date"
+        android:textSize="20px"
+        android:gravity="left" />
+                
         <TextView
         android:id="@+id/data_distance"
         android:layout_width="match_parent"
         android:layout_height="wrap_content"
-        android:layout_below="@+id/data_date"
+        android:layout_below="@+id/distance_text_info"
         android:textSize="40px"
-        android:gravity="center" />
+        android:gravity="left" />
         
         <!-- Put widgets for the right column inside this RelativeLayout. -->
 
