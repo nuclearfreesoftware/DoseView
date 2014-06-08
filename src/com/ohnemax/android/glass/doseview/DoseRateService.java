@@ -14,6 +14,7 @@ import java.util.Random;
 
 import android.text.format.DateFormat;
 import android.util.Log;
+import android.net.ConnectivityManager;
 import android.os.Bundle;
 
 import org.apache.http.HttpEntity;
@@ -23,6 +24,9 @@ import org.apache.http.client.ClientProtocolException;
 import org.apache.http.client.HttpClient;
 import org.apache.http.client.methods.HttpGet;
 import org.apache.http.impl.client.DefaultHttpClient;
+import org.apache.http.params.BasicHttpParams;
+import org.apache.http.params.HttpConnectionParams;
+import org.apache.http.params.HttpParams;
 import org.json.JSONArray;
 import org.json.JSONException;
 import org.json.JSONObject;
@@ -37,10 +41,12 @@ import android.content.Intent;
 import android.location.Location;
 import android.location.LocationListener;
 import android.location.LocationManager;
+import android.os.AsyncTask;
 import android.os.Handler;
 import android.os.IBinder;
 import android.os.StrictMode;
 import android.widget.RemoteViews;
+import android.net.NetworkInfo;
 
 enum CSDataSort { NEARNEW, NEWNEAR, FIRSTSET, LASTSET };
 
@@ -70,6 +76,72 @@ public class DoseRateService extends Service {
     private long lastProcessedTime = 0L;
     private long lastUpdatedTime = 0L;
 
+    public static boolean isConnected = false;
+
+    public boolean isDeviceConnectedToInternet() {
+        return isConnected;
+    }
+
+    private class CheckConnectivityTask extends AsyncTask<Void, Boolean, Boolean> {
+        protected Boolean doInBackground(Void... voids) {
+            while(true) {
+                // Update isConnected variable.
+                publishProgress(isConnected());
+                try {
+                    Thread.sleep(5000);
+                } catch (InterruptedException e) {
+                    e.printStackTrace();
+                }
+            }
+        }
+
+        /**
+         * Determines if the Glassware can access the internet.
+         * isNetworkAvailable() is used first because there is no point in executing an HTTP GET
+         * request if ConnectivityManager and NetworkInfo tell us that no network is available.
+         */
+        private boolean isConnected(){
+            if (isNetworkAvailable()) {
+                HttpGet httpGet = new HttpGet("http://www.google.com");
+                HttpParams httpParameters = new BasicHttpParams();
+                HttpConnectionParams.setConnectionTimeout(httpParameters, 3000);
+                HttpConnectionParams.setSoTimeout(httpParameters, 5000);
+
+                DefaultHttpClient httpClient = new DefaultHttpClient(httpParameters);
+                try{
+                    Log.d(TAG, "Checking network connection...");
+                    httpClient.execute(httpGet);
+                    Log.d(TAG, "Connection OK");
+                    return true;
+                }
+                catch(ClientProtocolException e){
+                    e.printStackTrace();
+                }
+                catch(IOException e){
+                    e.printStackTrace();
+                }
+                Log.d(TAG, "Connection unavailable");
+            } else {
+                // No connection; for Glass this probably means Bluetooth is disconnected.
+                Log.d(TAG, "No network available!");
+            }
+            return false;
+        }
+
+        private boolean isNetworkAvailable() {
+            ConnectivityManager connectivityManager
+                    = (ConnectivityManager) getSystemService(Context.CONNECTIVITY_SERVICE);
+            NetworkInfo activeNetworkInfo = connectivityManager.getActiveNetworkInfo();
+            Log.d(TAG, String.format("In isConnected(), activeNetworkInfo.toString(): %s",
+                    activeNetworkInfo == null ? "null" : activeNetworkInfo.toString()));
+            return activeNetworkInfo != null && activeNetworkInfo.isConnected();
+        }
+
+        protected void onProgressUpdate(Boolean... isConnected) {
+            DoseRateService.isConnected = isConnected[0];
+            Log.d(TAG, "Checking connection: connected = " + isConnected[0]);
+        }
+    }
     @Override
     public void onCreate() {
     	 // Just for testing, allow network access in the main thread
@@ -80,6 +152,7 @@ public class DoseRateService extends Service {
         super.onCreate();
         mRanGen = new Random();
         
+        new CheckConnectivityTask().execute();
         initializeLocationManager();
     }
 
@@ -351,7 +424,13 @@ public class DoseRateService extends Service {
                             String.valueOf((double)Math.round(longitude * 1000000) / 1000000));
                 	Log.d(TAG, "location: " + lastLoc.toString());
                 	
-                	readSCdata(longitude, latitude, 100);
+                	                	
+                	if(isDeviceConnectedToInternet()) {
+                		readSCdata(longitude, latitude, 100);
+                	}
+                	else {
+                		jsonloaded = false;
+                	}
                     if(!jsonloaded) {
                     	mLiveCardView.setTextViewText(R.id.cpm,
                                 "---");
