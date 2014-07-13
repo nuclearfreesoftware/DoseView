@@ -1,3 +1,36 @@
+/* Copyright (C) 2014, Moritz Kütt
+ * 
+ * This file is part of DoseView.
+ * 
+ * DoseView is free software: you can redistribute it and/or modify
+ * it under the terms of the GNU General Public License as published by
+ * the Free Software Foundation, either version 3 of the License, or
+ * (at your option) any later version.
+ * 
+ * DoseView is distributed in the hope that it will be useful,
+ * but WITHOUT ANY WARRANTY; without even the implied warranty of
+ * MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+ * GNU General Public License for more details.
+ * 
+ * You should have received a copy of the GNU General Public License
+ * along with DoseView.  If not, see <http://www.gnu.org/licenses/>.
+ * 
+ * 
+ * This file incorporates work (processLocationData / initializeLocalizationService) 
+ * covered by the following copyright and  permission notice:  
+ * 
+ *     The Do-No-Evil License Version 1.0 (DNE-1.0)
+ * 
+ *     Copyright (c) 2013 Harry Y
+ * 
+ *     Permission is hereby granted to any person obtaining a copy of this software to 
+ *     deal in the software without restriction subject to the following 
+ *     conditions: "The software shall be used for good, not evil."
+ * 
+ *     THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR IMPLIED.
+ * 
+ */
+
 package com.ohnemax.android.glass.doseview;
 
 import com.ohnemax.android.glass.doseview.R;
@@ -54,7 +87,7 @@ public class DoseRateService extends Service {
 	
 	
     private static final String TAG = DoseRateService.class.getSimpleName();
-
+    
     private static final String LIVE_CARD_TAG = "DoseRateCard";
 
     private LiveCard mLiveCard;
@@ -520,31 +553,11 @@ public class DoseRateService extends Service {
                 	mLiveCardView.setTextViewText(R.id.data_user,
                            "");
             	}
-            	// Nassau Hall Princeton
-            	// lat = 40.348627, +- 0.01
-            	// long = -74.659264 +- 0.03
-            	//latitude = 40.348627 - 0.01 + 2.0 * mRanGen.nextDouble() / 100;
-            	//longitude = -74.659264 - 0.03 + 6.0 * mRanGen.nextDouble() / 100;
-
-            	
-            	
-            	//mLiveCardView.setTextViewText(R.id.data_user,
-                //       "");
-//            	double longitude = 145.4131;
-//                double latitude = -37.5982;
-
-// no data example
-//                double longitude = 5.5;
-//                double latitude = 34.5;
-                
-                
-                
-              
+             
 
                 // Always call setViews() to update the live card's RemoteViews.
                 mLiveCard.setViews(mLiveCardView);
 
-                // Queue another score update in 30 seconds.
                 mHandler.postDelayed(mUpdateLiveCardRunnable, DELAY_MILLIS);
             }
         }
@@ -563,16 +576,6 @@ public class DoseRateService extends Service {
 
     @Override
     public IBinder onBind(Intent intent) {
-      /*
-       *  If you need to set up interprocess communication
-       * (activity to a service, for instance), return a binder object
-       * so that the client can receive and modify data in this service.
-       *
-       * A typical use is to give a menu activity access to a binder object
-       * if it is trying to change a setting that is managed by the live card
-       * service. The menu activity in this sample does not require any
-       * of these capabilities, so this just returns null.
-       */
         return null;
     }
     

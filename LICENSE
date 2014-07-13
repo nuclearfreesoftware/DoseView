@@ -1,0 +1,30 @@
+Copyright (C) 2014, Moritz Kütt
+
+This file is part of DoseView.
+
+DoseView is free software: you can redistribute it and/or modify
+it under the terms of the GNU General Public License as published by
+the Free Software Foundation, either version 3 of the License, or
+(at your option) any later version.
+ 
+DoseView is distributed in the hope that it will be useful,
+but WITHOUT ANY WARRANTY; without even the implied warranty of
+MERCHANTABILITY or FITNESS FOR A PARTICULAR PURPOSE.  See the
+GNU General Public License for more details.
+ 
+You should have received a copy of the GNU General Public License
+along with DoseView.  If not, see <http://www.gnu.org/licenses/>.
+
+GPL license included in file named "GPL".
+
+DoseView incorporates work covered by other copyright and  permission notices, 
+which are listed in the respective files.
+
+Github repositories for programs with copyright licenses from which parts of DoseView are derivatives:
+https://github.com/harrywye/gdkdemo
+https://github.com/googleglass/gdk-apidemo-sample
+
+Besides listed copyright notices, for this project help, ideas and snippets from the following places were used:
+http://stackoverflow.com/questions/20832798/how-to-check-if-google-glass-is-connected-to-internet-using-gdk
+https://developers.google.com/glass/develop/gdk/live-cards
+

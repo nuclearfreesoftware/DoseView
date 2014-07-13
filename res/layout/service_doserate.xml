@@ -54,9 +54,6 @@
         android:layout_below="@+id/device_long"
         android:textSize="30px"
         android:gravity="left" />
-        
-        	
-        <!-- Put widgets for the left column inside this RelativeLayout. -->
 
     </RelativeLayout>
 
@@ -120,8 +117,6 @@
         android:textSize="40px"
         android:gravity="left" />
         
-        <!-- Put widgets for the right column inside this RelativeLayout. -->
-
     </RelativeLayout>
 
 
